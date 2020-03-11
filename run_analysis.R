@@ -62,9 +62,8 @@ testset <- bind_cols(subject = testSubjectVector, testset)
 merged <- bind_rows(trainset, testset)
 
 tidydata <- merged %>% # Create a new data frame "tidydata" that takes the merged set
-  gather(variable, measure, -type, -subject, -activity) %>% # Gather (melt) the feature columns into variable and measure key value columns
-  group_by(variable, activity, subject) %>% # Group the data by the variable, activity, and subject
-  summarise(average_value = mean(measure)) # Then summarize the grouped data by taking the average of each unique row of the grouped columns
+  group_by(activity, subject) %>% # Group the data by the activity, and subject
+  summarise_all(funs(mean)) # Then summarize the grouped data by taking the average of each unique row of the grouped columns
 
 # Write the tidy data into the working directory as a txt file
 write.table(tidydata, file = "./tidydata.txt", row.names = FALSE)

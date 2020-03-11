@@ -6,10 +6,6 @@ This file contains the description of the variables, the data, and any transform
 
 ## Description of the columns in the output table `tidydata.txt` :
 
-### - variable
-This indicates what is the actual measured variable (feature).
-The description of each variable (feature) is found in the file `features_info.txt`.
-
 ### - activity
 The value of this column is one of 6 values. It describes the activity being performed when the measurement was taken.
  - WALKING
@@ -24,10 +20,11 @@ The labels are described in the file `activity_labels.txt` and the corresponding
 ### - subject
 Is the identifier of the subject who performed the activity. The subject of each record **(before summarization)** is laid out in the files `train/subject_train.txt` and `test/subject_test.txt`.
 
-### - average value
+### - feature columns
+These are a collection of columns that indicate what is the actual measured variable (feature).
+The description of each variable (feature) is found in the file `features_info.txt`.
+The value of each of those columns the average value of the variable (feature) after grouping by the subject and activity.
 
-This is the average value of the variable (feature) after grouping by the subject, activity, and variable (feature).
-Therefore, each record is a unique combination of those three fields and and an average measure of the remaining rows resulting from the grouping.
 
 ## Operations and transformations done to the `UCI HAR Dataset`
 
@@ -56,9 +53,8 @@ Therefore, each record is a unique combination of those three fields and and an 
 - Merged both sets by adding the rows from one set to the other into a new set called `merged`.
 
 - Created a new data frame `tidydata` that takes the merged set and performs grouping and summarization by:
-	- Gathering (melting) the feature columns (all columns except `type`, `subject` and `activity`)  into `variable` and `measure` key value columns. 
-	- Grouping the resulting data by the `variable`, `activity`, and `subject` columns.
-	- Summarizing the grouped data by taking the average of each unique row of the grouped columns.
+	- Grouping the resulting data by the, `activity`, and `subject` columns.
+	- Summarizing the grouped data by taking the average of each unique row of the columns.
 
 - Writing the tidy data into the working directory as a `txt` file: `tidydata.txt`.
 
@@ -76,4 +72,4 @@ The inputs of the script `run_analysis.R` are 8 files found in the `UCI HAR Data
  - `test/subject_test.txt`
 
 ### Output
-The output of the script `run_analysis.R` is a text file called `tidydata.txt` that contains 4 columns and 11880 rows.
+The output of the script `run_analysis.R` is a text file called `tidydata.txt` that contains 69 columns and 180 rows.
